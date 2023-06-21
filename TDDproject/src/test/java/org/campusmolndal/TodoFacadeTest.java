@@ -15,12 +15,12 @@ public class TodoFacadeTest {
     // Instansera en MockDatabase och en DatabaseFacade
     @Mock
     private TodoDatabase mockDatabase;
-    private TodoFacade facade;
+    private TodoDatabaseFacade databaseFacade;
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        facade = new TodoFacade();
+        databaseFacade = new TodoDatabaseFacade(mockDatabase);
     }
 
     /** Test addTodo() method
@@ -33,10 +33,10 @@ public class TodoFacadeTest {
         Todo todo = new Todo(1,"Test task", false);
 
         // Act
-        facade.addTodo(todo);
+        databaseFacade.addNewTodo(todo);
 
         // Assert
-        verify(mockDatabase).addTodo(todo);
+        verify(mockDatabase).create(todo);
     }
 
     /** Test getTodo() method

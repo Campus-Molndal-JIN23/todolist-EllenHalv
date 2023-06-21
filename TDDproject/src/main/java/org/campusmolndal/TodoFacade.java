@@ -6,21 +6,23 @@ import java.util.Scanner;
  *
  */
 public class TodoFacade {
+    private final TodoDatabaseFacade todoDatabaseFacade;
     Scanner sc = new Scanner(System.in);
-    TodoDatabase todoDatabase;
-
+public TodoFacade(TodoDatabaseFacade todoDatabaseFacade) {
+        this.todoDatabaseFacade = todoDatabaseFacade;
+    }
     public void addTodo(Todo todo) {
         todo.setId(generateUniqueId());
         todo.setText("Do the dishes");
         todo.setDone(false);
 
-        todoDatabase.addTodo(todo);
+        todoDatabaseFacade.addNewTodo(todo);
     }
 
     /** Generates a unique id for the todo
      * @return
      */
     public int generateUniqueId() {
-        return 0;
+        return 1;
     }
 }
