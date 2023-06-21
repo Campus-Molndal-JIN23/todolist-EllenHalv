@@ -1,18 +1,43 @@
 package org.campusmolndal;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import static org.mockito.Mockito.verify;
+
 /** Tests the DatabaseFacade class with help from fake responses from MockDatabase
  *
  */
-public class TodoListFacadeTest {
-
-    // @BeforeEach borde användas för att återställa databasen mellan varje test? Eller sätt in data inför varje test?
+public class TodoFacadeTest {
 
     // Instansera en MockDatabase och en DatabaseFacade
+    @Mock
+    private TodoDatabase mockDatabase;
+    private TodoFacade facade;
 
-    /** Test addNewTodo() method
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
+        facade = new TodoFacade();
+    }
+
+    /** Test addTodo() method
      * - task not null
      * -
      */
+    @Test
+    public void addTodoTest() {
+        // Arrange
+        Todo todo = new Todo(1,"Test task", false);
+
+        // Act
+        facade.addTodo(todo);
+
+        // Assert
+        verify(mockDatabase).addTodo(todo);
+    }
 
     /** Test getTodo() method
      * Take the task id and compare it to the task id in the database
