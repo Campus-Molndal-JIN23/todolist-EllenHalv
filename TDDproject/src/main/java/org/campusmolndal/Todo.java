@@ -38,4 +38,8 @@ public class Todo {
     public void setDone(boolean done) {
         this.done = done;
     }
+    @Override
+    public String toString() {
+        return "ID: " + id + ", Text: " + text + ", Done: " + done;
+    }
 }

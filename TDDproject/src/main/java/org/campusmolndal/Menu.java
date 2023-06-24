@@ -16,6 +16,38 @@ public class Menu {
         printMenu();
     }
     public void printMenu() {
+        boolean run = true;
+        while (run) {
+            printMenuOptions();
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+            switch (choice) {
+                case 1:
+                    addTodo();
+                    break;
+                case 2:
+                    findTodo();
+                    break;
+                case 3:
+                    updateTodo();
+                    break;
+                case 4:
+                    deleteTodo();
+                    break;
+                case 5:
+                    showAllTodos();
+                    break;
+                case 6:
+                    exit();
+                    break;
+                default:
+                    System.out.println("Invalid choice");
+                    break;
+            }
+        }
+    }
+
+    private void printMenuOptions() {
         System.out.println("1. Add todo");
         System.out.println("2. Find todo");
         System.out.println("3. Update todo");
@@ -24,37 +56,6 @@ public class Menu {
         System.out.println("6. Exit");
 
         System.out.print("Enter your choice: ");
-        int choice = scanner.nextInt();
-
-        switch (choice) {
-            case 1:
-                System.out.println("Add todo");
-                addTodo();
-                break;
-            case 2:
-                System.out.println("Find todo");
-                findTodo();
-                break;
-            case 3:
-                System.out.println("Update todo");
-                updateTodo();
-                break;
-            case 4:
-                System.out.println("Delete todo");
-                deleteTodo();
-                break;
-            case 5:
-                System.out.println("Show all todos");
-                showAllTodos();
-                break;
-            case 6:
-                System.out.println("Exit");
-                exit();
-                break;
-            default:
-                System.out.println("Invalid choice");
-                break;
-        }
     }
 
     private void exit() {
@@ -64,9 +65,9 @@ public class Menu {
 
     private void addTodo() {
         System.out.print("Enter todo text: ");
-        String text = scanner.next();
+        String text = scanner.nextLine();
         System.out.print("Enter todo status (Is the todo done? Y/N): ");
-        String doneString = scanner.next();
+        String doneString = scanner.nextLine();
         boolean done;
         if (doneString.equalsIgnoreCase("Y")) {
             done = true;
@@ -91,9 +92,9 @@ public class Menu {
         System.out.println("Description: " + todo.getText() + "Is done: " + todo.isDone());
 
         System.out.print("Enter new todo description: ");
-        String text = scanner.next();
+        String text = scanner.nextLine();
         System.out.print("Enter new todo status (Is the todo done? Y/N): ");
-        String doneString = scanner.next();
+        String doneString = scanner.nextLine();
         boolean done;
         if (doneString.equalsIgnoreCase("Y")) {
             done = true;
@@ -112,6 +113,16 @@ public class Menu {
 
     private void showAllTodos() {
         ArrayList allTodos = todoDFacade.getAllTodos();
-        System.out.println(allTodos);
+        displayTodos(allTodos);
+    }
+
+    public void displayTodos(ArrayList<Todo> todos) {
+        System.out.println("Todos:");
+        for (Todo todo : todos) {
+            System.out.println("ID: " + todo.getId());
+            System.out.println("Text: " + todo.getText());
+            System.out.println("Done: " + todo.isDone());
+            System.out.println();
+        }
     }
 }

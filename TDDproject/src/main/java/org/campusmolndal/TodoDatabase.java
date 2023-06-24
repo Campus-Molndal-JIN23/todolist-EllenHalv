@@ -36,7 +36,7 @@ public class TodoDatabase {
     private Connection connect() {
         try {
             if (connection == null || connection.isClosed()) {
-                connection = DriverManager.getConnection("jdbc:sqlite:your_database.db");
+                connection = DriverManager.getConnection("jdbc:sqlite:todo-list-db.db");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -45,13 +45,12 @@ public class TodoDatabase {
     }
 
     public void create(Todo todo) {
-        String sql = "INSERT INTO todos (id, text, done) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO todos (text, done) VALUES (?, ?)";
 
         try (Connection conn = connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, todo.getId());
-            pstmt.setString(2, todo.getText());
-            pstmt.setBoolean(3, todo.isDone());
+            pstmt.setString(1, todo.getText());
+            pstmt.setBoolean(2, todo.isDone());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -65,9 +64,14 @@ public class TodoDatabase {
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
-            todo.setId(rs.getInt("id"));
-            todo.setText(rs.getString("text"));
-            todo.setDone(rs.getBoolean("done"));
+            if (rs.next()) {
+                todo.setId(rs.getInt("id"));
+                todo.setText(rs.getString("text"));
+                todo.setDone(rs.getBoolean("done"));
+            } else {
+                // Todo not found with the specified id
+                return null;
+            }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -94,7 +98,7 @@ public class TodoDatabase {
     }
 
     public void update(int id, Todo todo) {
-        String sql = "UPDATE todos (text, done) VALUES (?, ?) WHERE id = ?";
+        String sql = "UPDATE todos SET text = ?, done = ? WHERE id = ?";
         try (Connection conn = connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, todo.getText());
