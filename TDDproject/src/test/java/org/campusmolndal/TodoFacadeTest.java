@@ -23,7 +23,7 @@ public class TodoFacadeTest {
         databaseFacade = new TodoDatabaseFacade(mockDatabase);
     }
 
-    /** Test addTodo() method
+    /** Test createTodo() method
      * - task not null
      * -
      */

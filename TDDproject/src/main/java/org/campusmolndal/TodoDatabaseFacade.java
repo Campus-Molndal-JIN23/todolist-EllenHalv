@@ -2,7 +2,7 @@ package org.campusmolndal;
 
 import java.util.ArrayList;
 
-/** class to handle database operations
+/** class to help handle database operations
  *
  */
 public class TodoDatabaseFacade {
@@ -13,33 +13,26 @@ public class TodoDatabaseFacade {
         this.todoDatabase = todoDatabase;
     }
 
-    public Todo getTodoById(int id) {
-        try {
-            Todo todo = todoDatabase.getTodoById(id);
-        } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
-        }
+    public Todo getTodoById(int id) { //går dessa att göra snyggare med try/catch?
+        Todo todo = todoDatabase.getTodoById(id);
         return todo; // returnerade objektet bör skrivas ut för att se att det är uppdaterat
     }
 
-    public Todo[] getAllTodos() {
-        try {
-            ArrayList todos = todoDatabase.getAllTodos();
-        } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
-        }
+    public ArrayList getAllTodos() { //går dessa att göra snyggare med try/catch?
+        ArrayList<Todo> todos = todoDatabase.getAllTodos();
         return todos; // returnerade objektet bör skrivas ut för att se att det är uppdaterat
     }
 
-    /*public Todo[] getTodosByDoneStatus(boolean done) {
-        return todoDatabase.getTodosByDoneStatus(done);
-    }*/
+    public ArrayList getTodosByDoneStatus(boolean done) { //går dessa att göra snyggare med try/catch?
+        ArrayList<Todo> todos = todoDatabase.getTodosByDoneStatus(done);
+        return todos; // returnerade objektet bör skrivas ut för att se att det är uppdaterat
+    }
 
     /*public Todo[] getTodosByAssignee(Person assignee) {
         return todoDatabase.getTodosByAssignee(assignee);
     }*/
 
-    public void addNewTodo(Todo todo) {
+    public void addNewTodo(Todo todo) { // tar in ett obejkt av typen Todo från TodoFacade och lägger till det i databasen
         try {
             todoDatabase.create(todo);
         } catch (Exception e) {
@@ -47,13 +40,12 @@ public class TodoDatabaseFacade {
         }
     }
 
-    public Todo updateTodoById(int id, Todo todo) {
+    public void updateTodoById(int id, Todo todo) {
         try {
             todoDatabase.update(id, todo);
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
         }
-        return todo; // returnerade objektet bör skrivas ut för att se att det är uppdaterat
     }
 
     public void deleteTodoById(int id) {
