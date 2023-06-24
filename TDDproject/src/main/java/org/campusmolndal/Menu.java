@@ -4,17 +4,23 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
+    private TodoDatabase todoDatabase;
     private TodoDatabaseFacade todoDFacade;
     private TodoFacade todoFacade;
-    private Todo todo;
     Scanner scanner = new Scanner(System.in);
 
-    private void printMenu() {
+    public Menu() {
+        this.todoDatabase = new TodoDatabase("todo-list-db");
+        this.todoDFacade = new TodoDatabaseFacade(todoDatabase);
+        this.todoFacade = new TodoFacade(todoDFacade);
+        printMenu();
+    }
+    public void printMenu() {
         System.out.println("1. Add todo");
         System.out.println("2. Find todo");
         System.out.println("3. Update todo");
         System.out.println("4. Delete todo");
-        System.out.println("5. List all todos");
+        System.out.println("5. Show all todos");
         System.out.println("6. Exit");
 
         System.out.print("Enter your choice: ");
@@ -59,8 +65,14 @@ public class Menu {
     private void addTodo() {
         System.out.print("Enter todo text: ");
         String text = scanner.next();
-        System.out.print("Enter todo status: ");
-        boolean done = scanner.nextBoolean();
+        System.out.print("Enter todo status (Is the todo done? Y/N): ");
+        String doneString = scanner.next();
+        boolean done;
+        if (doneString.equalsIgnoreCase("Y")) {
+            done = true;
+        } else {
+            done = false;
+        }
 
         todoFacade.createTodo(text, done);
     }
@@ -80,9 +92,14 @@ public class Menu {
 
         System.out.print("Enter new todo description: ");
         String text = scanner.next();
-        System.out.print("Enter new todo status: ");
-        boolean done = scanner.nextBoolean(); //HUR FUNKAR DETTA??
-
+        System.out.print("Enter new todo status (Is the todo done? Y/N): ");
+        String doneString = scanner.next();
+        boolean done;
+        if (doneString.equalsIgnoreCase("Y")) {
+            done = true;
+        } else {
+            done = false;
+        }
         todoFacade.updateTodo(id, text, done);
     }
 

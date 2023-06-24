@@ -18,7 +18,7 @@ public class TodoFacadeTest {
     private TodoDatabaseFacade databaseFacade;
 
     @BeforeEach
-    public void setUp() {
+    private void setUp() {
         MockitoAnnotations.initMocks(this);
         databaseFacade = new TodoDatabaseFacade(mockDatabase);
     }
@@ -28,7 +28,7 @@ public class TodoFacadeTest {
      * -
      */
     @Test
-    public void addTodoTest() {
+    private void addTodoTest() {
         // Arrange
         Todo todo = new Todo(1,"Test task", false);
 

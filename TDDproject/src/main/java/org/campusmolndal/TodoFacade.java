@@ -10,7 +10,6 @@ public TodoFacade(TodoDatabaseFacade todoDatabaseFacade) {
     }
     public void createTodo(String text, boolean done) { // tar in parametrar och skapar ett objekt av typen Todo
         Todo todo = new Todo();
-        todo.setId(generateUniqueId());
         todo.setText(text);
         todo.setDone(done);
 
@@ -22,12 +21,5 @@ public TodoFacade(TodoDatabaseFacade todoDatabaseFacade) {
         todo.setText(text);
         todo.setDone(done);
         todoDatabaseFacade.updateTodoById(id, todo);
-    }
-
-    /** Generates a unique id for the todo DENNA MÅSTE FIXAS
-     * @return
-     */
-    public int generateUniqueId() {
-        return 1;
     }
 }
