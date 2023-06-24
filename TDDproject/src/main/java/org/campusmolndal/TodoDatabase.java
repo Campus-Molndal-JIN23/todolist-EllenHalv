@@ -120,24 +120,4 @@ public class TodoDatabase {
             System.out.println(e.getMessage());
         }
     }
-
-    public ArrayList<Todo> getTodosByDoneStatus(boolean done) {
-        ArrayList<Todo> todos = new ArrayList<>();
-        String sql = "SELECT * FROM todos WHERE done = ?";
-        try (Connection conn = connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setBoolean(1, done);
-            ResultSet rs = pstmt.executeQuery();
-            while (rs.next()) {
-                Todo todo = new Todo();
-                todo.setId(rs.getInt("id"));
-                todo.setText(rs.getString("text"));
-                todo.setDone(rs.getBoolean("done"));
-                todos.add(todo);
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return todos;
-    }
 }

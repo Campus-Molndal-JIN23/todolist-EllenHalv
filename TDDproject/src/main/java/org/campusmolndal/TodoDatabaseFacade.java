@@ -13,38 +13,47 @@ public class TodoDatabaseFacade {
         this.todoDatabase = todoDatabase;
     }
 
-    public Todo getTodoById(int id) { //går dessa att göra snyggare med try/catch?
-        Todo todo = todoDatabase.getTodoById(id);
-        return todo; // returnerade objektet bör skrivas ut för att se att det är uppdaterat
+    public Todo getTodoById(int id) {
+        try {
+            Todo todo = todoDatabase.getTodoById(id);
+            return todo;
+        } catch (Exception e) {
+            System.err.println("Error retrieving todo with ID " + id + ": " + e.getMessage());
+            return null;
+        }
     }
 
-    public ArrayList getAllTodos() { //går dessa att göra snyggare med try/catch?
-        ArrayList<Todo> todos = todoDatabase.getAllTodos();
-        return todos; // returnerade objektet bör skrivas ut för att se att det är uppdaterat
-    }
-
-    public ArrayList getTodosByDoneStatus(boolean done) { //går dessa att göra snyggare med try/catch?
-        ArrayList<Todo> todos = todoDatabase.getTodosByDoneStatus(done);
-        return todos; // returnerade objektet bör skrivas ut för att se att det är uppdaterat
+    public ArrayList<Todo> getAllTodos() {
+        try {
+            ArrayList<Todo> todos = todoDatabase.getAllTodos();
+            return todos;
+        } catch (Exception e) {
+            System.err.println("Error retrieving all todos: " + e.getMessage());
+            return new ArrayList<>();
+        }
     }
 
     /*public Todo[] getTodosByAssignee(Person assignee) {
         return todoDatabase.getTodosByAssignee(assignee);
     }*/
 
-    public void addNewTodo(Todo todo) { // tar in ett obejkt av typen Todo från TodoFacade och lägger till det i databasen
+    public void addNewTodo(Todo todo) {
         try {
+            if (todo.getText().isEmpty()) {
+                throw new IllegalArgumentException("Todo text cannot be empty");
+            }
             todoDatabase.create(todo);
         } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
+            System.err.println("Error adding new todo: " + e.getMessage());
         }
     }
+
 
     public void updateTodoById(int id, Todo todo) {
         try {
             todoDatabase.update(id, todo);
         } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
+            System.err.println("Error updating todo with ID " + id + ": " + e.getMessage());
         }
     }
 
@@ -52,7 +61,7 @@ public class TodoDatabaseFacade {
         try {
             todoDatabase.delete(id);
         } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
+            System.err.println("Error deleting todo with ID " + id + ": " + e.getMessage());
         }
     }
 }

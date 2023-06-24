@@ -8,7 +8,7 @@ public class TodoFacade {
 public TodoFacade(TodoDatabaseFacade todoDatabaseFacade) {
         this.todoDatabaseFacade = todoDatabaseFacade;
     }
-    public void createTodo(String text, boolean done) { // tar in parametrar och skapar ett objekt av typen Todo
+    public void createTodo(String text, boolean done) {
         Todo todo = new Todo();
         todo.setText(text);
         todo.setDone(done);
@@ -16,7 +16,7 @@ public TodoFacade(TodoDatabaseFacade todoDatabaseFacade) {
         todoDatabaseFacade.addNewTodo(todo);
     }
 
-    public void updateTodo(int id, String text, boolean done) { //hämta todo från databas, skriv ut den och uppdatera den, spara den på nytt
+    public void updateTodo(int id, String text, boolean done) {
         Todo todo = todoDatabaseFacade.getTodoById(id);
         todo.setText(text);
         todo.setDone(done);
