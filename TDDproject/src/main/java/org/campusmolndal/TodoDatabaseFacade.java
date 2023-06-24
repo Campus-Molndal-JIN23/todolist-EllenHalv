@@ -38,18 +38,22 @@ public class TodoDatabaseFacade {
     }*/
 
     public void addNewTodo(Todo todo) {
+        if (todo.getText().isEmpty()) {
+            throw new IllegalArgumentException("Todo text cannot be empty");
+        }
+
         try {
-            if (todo.getText().isEmpty()) {
-                throw new IllegalArgumentException("Todo text cannot be empty");
-            }
             todoDatabase.create(todo);
         } catch (Exception e) {
             System.err.println("Error adding new todo: " + e.getMessage());
         }
     }
 
-
     public void updateTodoById(int id, Todo todo) {
+        if (id == 0 || id < 0) {
+            throw new IllegalArgumentException("Todo ID cannot be zero or negative");
+        }
+
         try {
             todoDatabase.update(id, todo);
         } catch (Exception e) {

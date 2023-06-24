@@ -4,19 +4,20 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class TodoDatabaseFacadeTest {
 
     @Mock
     private TodoDatabase mockDatabase;
     private TodoDatabaseFacade databaseFacade;
+
 
     @BeforeEach
     private void setUp() {
@@ -25,7 +26,7 @@ public class TodoDatabaseFacadeTest {
     }
 
     @Test
-    public void addNewTodoByIdTest() {
+    public void addNewTodoTest() {
         Todo todo = new Todo();
         todo.setId(1);
         todo.setText("Test task");
@@ -37,15 +38,28 @@ public class TodoDatabaseFacadeTest {
     }
 
     @Test
-    public void updateTodoByIdTest() {
+    public void addNewTodoWithEmptyTextShouldThrowException() {
         Todo todo = new Todo();
         todo.setId(1);
+        todo.setText("");
+        todo.setDone(false);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            databaseFacade.addNewTodo(todo);
+        });
+    }
+
+
+    @Test
+    public void updateTodoByIdZeroOrNegativeShouldThrowException() {
+        Todo todo = new Todo();
+        todo.setId(0);
         todo.setText("Test task");
         todo.setDone(false);
 
-        databaseFacade.updateTodoById(todo.getId(), todo);
-
-        verify(mockDatabase).update(todo.getId(), todo);
+        assertThrows(IllegalArgumentException.class, () -> {
+            databaseFacade.updateTodoById(0, todo);
+        });
     }
 
     @Test
@@ -82,7 +96,6 @@ public class TodoDatabaseFacadeTest {
 
     @Test
     public void getTodoByIdTest() {
-        // Test case for getting a specific todo by ID
         int todoId = 1;
         Todo todo = new Todo(1, "Test task", false);
 
