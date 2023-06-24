@@ -19,8 +19,7 @@ public class Menu {
         boolean run = true;
         while (run) {
             printMenuOptions();
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+            int choice = Integer.parseInt(scanner.nextLine());
             switch (choice) {
                 case 1:
                     addTodo();
@@ -80,14 +79,15 @@ public class Menu {
 
     private void findTodo() {
         System.out.print("Enter todo id: ");
-        int id = scanner.nextInt();
+        int id = Integer.parseInt(scanner.nextLine());
 
-        todoDFacade.getTodoById(id);
+        Todo todo = todoDFacade.getTodoById(id);
+        displayTodo(todo);
     }
 
     private void updateTodo() {
         System.out.print("Enter todo id: ");
-        int id = scanner.nextInt();
+        int id = Integer.parseInt(scanner.nextLine());
         Todo todo = todoDFacade.getTodoById(id);
         System.out.println("Description: " + todo.getText() + "Is done: " + todo.isDone());
 
@@ -102,21 +102,31 @@ public class Menu {
             done = false;
         }
         todoFacade.updateTodo(id, text, done);
+        System.out.println("Todo has been updated");
     }
 
     private void deleteTodo() {
         System.out.print("Enter todo id: ");
-        int id = scanner.nextInt();
+        int id = Integer.parseInt(scanner.nextLine());
 
-        todoDFacade.deleteTodoById(id);
+        Todo todo = todoDFacade.getTodoById(id);
+        displayTodo(todo);
+        System.out.println("Are you sure you want to delete this todo? Y/N");
+        String answer = scanner.nextLine();
+        if (answer.equalsIgnoreCase("Y")) {
+            todoDFacade.deleteTodoById(id);
+            System.out.println("Todo has been deleted");
+        } else {
+            System.out.println("Returning to menu...");
+        }
     }
 
     private void showAllTodos() {
         ArrayList allTodos = todoDFacade.getAllTodos();
-        displayTodos(allTodos);
+        displayArrayListTodos(allTodos);
     }
 
-    public void displayTodos(ArrayList<Todo> todos) {
+    private void displayArrayListTodos(ArrayList<Todo> todos) {
         System.out.println("Todos:");
         for (Todo todo : todos) {
             System.out.println("ID: " + todo.getId());
@@ -124,5 +134,12 @@ public class Menu {
             System.out.println("Done: " + todo.isDone());
             System.out.println();
         }
+    }
+
+    private void displayTodo(Todo todo) {
+        System.out.println("ID: " + todo.getId());
+        System.out.println("Text: " + todo.getText());
+        System.out.println("Done: " + todo.isDone());
+        System.out.println();
     }
 }
