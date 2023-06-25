@@ -65,52 +65,39 @@ public class Menu {
     }
 
     private void addTodo() {
-        System.out.print("Enter todo text: ");
-        String text = scanner.nextLine();
-        System.out.print("Enter todo status (Is the todo done? Y/N): ");
-        String doneString = scanner.nextLine();
-        boolean done;
-        if (doneString.equalsIgnoreCase("Y")) {
-            done = true;
-        } else {
-            done = false;
-        }
+        String text = getTextInput();
+        boolean done = getDoneInput();
 
+        try {
         todoFacade.createTodo(text, done);
         System.out.println("\n~ Todo has been added ~");
+        } catch (Exception e) {
+            System.out.println("Something went wrong, please try again");
+            addTodo();
+        }
     }
 
     private void findTodo() {
-        System.out.print("Enter todo id: ");
-        int id = Integer.parseInt(scanner.nextLine());
+        int id = getIdInput();
 
         Todo todo = todoDFacade.getTodoById(id);
         displayTodo(todo);
     }
 
     private void updateTodo() {
-        System.out.print("Enter todo id: ");
-        int id = Integer.parseInt(scanner.nextLine());
+        int id = getIdInput();
         Todo todo = todoDFacade.getTodoById(id);
         System.out.println("\nDescription: " + todo.getText() + "\nIs done: " + todo.isDone());
 
-        System.out.print("\nEnter new todo description: ");
-        String text = scanner.nextLine();
-        System.out.print("Enter new todo status (Is the todo done? Y/N): ");
-        String doneString = scanner.nextLine();
-        boolean done;
-        if (doneString.equalsIgnoreCase("Y")) {
-            done = true;
-        } else {
-            done = false;
-        }
+        String text = getTextInput();
+        boolean done = getDoneInput();
+
         todoFacade.updateTodo(id, text, done);
         System.out.println("\n~ Todo has been updated ~");
     }
 
     private void deleteTodo() {
-        System.out.print("Enter todo id: ");
-        int id = Integer.parseInt(scanner.nextLine());
+        int id = getIdInput();
 
         Todo todo = todoDFacade.getTodoById(id);
         displayTodo(todo);
@@ -144,5 +131,40 @@ public class Menu {
         System.out.println("Text: " + todo.getText());
         System.out.println("Done: " + todo.isDone());
         System.out.println();
+    }
+
+    private int getIdInput() {
+        System.out.print("Enter todo id: ");
+        int id = Integer.parseInt(scanner.nextLine());
+        if (id <= 0) {
+            System.out.println("Invalid input, please try again");
+            getIdInput();
+        }
+        return id;
+    }
+
+    private boolean getDoneInput() {
+        System.out.print("Enter todo status (Is the todo done? Y/N): ");
+        String doneString = scanner.nextLine();
+        boolean done;
+        if (doneString.equalsIgnoreCase("Y")) {
+            done = true;
+        } else if (doneString.equalsIgnoreCase("N")) {
+            done = false;
+        } else {
+            System.out.println("Invalid input, please try again");
+            done = getDoneInput();
+        }
+        return done;
+    }
+
+    private String getTextInput() {
+        System.out.print("Enter todo text: ");
+        String text = scanner.nextLine();
+        if (text.isEmpty()) {
+            System.out.println("Invalid input, please try again");
+            getTextInput();
+        }
+        return text;
     }
 }
