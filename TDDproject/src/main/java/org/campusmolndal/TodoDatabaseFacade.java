@@ -14,6 +14,9 @@ public class TodoDatabaseFacade {
     }
 
     public Todo getTodoById(int id) {
+        if (id <= 0) {
+            return null;
+        }
         try {
             Todo todo = todoDatabase.getTodoById(id);
             return todo;
@@ -33,10 +36,6 @@ public class TodoDatabaseFacade {
         }
     }
 
-    /*public Todo[] getTodosByAssignee(Person assignee) {
-        return todoDatabase.getTodosByAssignee(assignee);
-    }*/
-
     public void addNewTodo(Todo todo) {
         if (todo.getText().isEmpty()) {
             throw new IllegalArgumentException("Todo text cannot be empty");
@@ -49,9 +48,9 @@ public class TodoDatabaseFacade {
         }
     }
 
-    public void updateTodoById(int id, Todo todo) {
-        if (id == 0 || id < 0) {
-            throw new IllegalArgumentException("Todo ID cannot be zero or negative");
+    public Todo updateTodoById(int id, Todo todo) {
+        if (id <= 0) {
+            return null;
         }
 
         try {
@@ -59,13 +58,19 @@ public class TodoDatabaseFacade {
         } catch (Exception e) {
             System.err.println("Error updating todo with ID " + id + ": " + e.getMessage());
         }
+        return todo;
     }
 
-    public void deleteTodoById(int id) {
+    public Todo deleteTodoById(int id) {
+        if (id <= 0) {
+            return null;
+        }
+        Todo todo = new Todo();
         try {
             todoDatabase.delete(id);
         } catch (Exception e) {
             System.err.println("Error deleting todo with ID " + id + ": " + e.getMessage());
         }
+        return todo;
     }
 }

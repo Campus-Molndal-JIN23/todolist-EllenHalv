@@ -1,14 +1,10 @@
 package org.campusmolndal;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-
 import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -20,7 +16,7 @@ public class TodoDatabaseFacadeTest {
 
 
     @BeforeEach
-    private void setUp() {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         databaseFacade = new TodoDatabaseFacade(mockDatabase);
     }
@@ -51,32 +47,27 @@ public class TodoDatabaseFacadeTest {
 
 
     @Test
-    public void updateTodoByIdZeroOrNegativeShouldThrowException() {
+    public void updateTodoByIdZeroOrNegativeShouldReturnNull() {
         Todo todo = new Todo();
         todo.setId(0);
         todo.setText("Test task");
         todo.setDone(false);
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            databaseFacade.updateTodoById(0, todo);
-        });
+        assertNull(databaseFacade.updateTodoById(0, todo));
     }
 
     @Test
-    public void deleteTodoByIdTest() {
+    public void deleteTodoByIdZeroOrNegativeShouldReturnNull() {
         Todo todo = new Todo();
-        todo.setId(1);
+        todo.setId(0);
         todo.setText("Test task");
         todo.setDone(false);
 
-        databaseFacade.deleteTodoById(todo.getId());
-
-        verify(mockDatabase).delete(todo.getId());
+        assertNull(databaseFacade.deleteTodoById(0));
     }
 
     @Test
     public void getAllTodosTest() {
-        // Test case for getting all todos
         ArrayList<Todo> todos = new ArrayList<>();
         todos.add(new Todo(1, "Task 1", false));
         todos.add(new Todo(2, "Task 2", true));
@@ -95,24 +86,7 @@ public class TodoDatabaseFacadeTest {
     }
 
     @Test
-    public void getTodoByIdTest() {
-        int todoId = 1;
-        Todo todo = new Todo(1, "Test task", false);
-
-        when(mockDatabase.getTodoById(todoId)).thenReturn(todo);
-
-        Todo result = databaseFacade.getTodoById(todoId);
-
-        assertNotNull(result);
-        assertEquals(todo.getId(), result.getId());
-        assertEquals(todo.getText(), result.getText());
-        assertEquals(todo.isDone(), result.isDone());
-
-        verify(mockDatabase).getTodoById(todoId);
-    }
-
-    @Test
-    public void getTodoByNonexistentIdTest() {
+    public void getTodoByIdNonexistentIdShouldReturnNull() {
         // Test case for getting a todo that does not exist in the database
         int todoId = 999;
 

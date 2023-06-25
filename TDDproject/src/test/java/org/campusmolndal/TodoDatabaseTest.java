@@ -4,11 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import java.util.ArrayList;
 import java.util.List;
-
-import static org.mockito.Mockito.verify;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TodoDatabaseTest {
 
@@ -17,69 +14,57 @@ public class TodoDatabaseTest {
     private TodoDatabaseFacade databaseFacade;
 
     @BeforeEach
-    private void setUp() {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
+        mockDatabase = new TodoDatabase("mock-database");
         databaseFacade = new TodoDatabaseFacade(mockDatabase);
     }
 
     @Test
-    public void createTest() {
-        Todo todo = new Todo(1, "Test task", false);
+    public void createWithEmptyTextShouldReturnNull() {
+        Todo todo = new Todo();
+        todo.setId(0);
+        todo.setText("");
+        todo.setDone(false);
 
-        databaseFacade.addNewTodo(todo);
-
-        verify(mockDatabase).create(todo);
+        assertNull(mockDatabase.create(todo));
     }
 
     @Test
-    public void updateTest() {
+    public void getTodoByIdWithZeroOrNegativeShouldReturnNull() {
         Todo todo = new Todo();
-        todo.setId(1);
+        todo.setId(0);
         todo.setText("Test task");
         todo.setDone(false);
 
-        mockDatabase.update(todo.getId(), todo);
-
-        verify(mockDatabase).update(todo.getId(), todo);
+        assertNull(mockDatabase.getTodoById(0));
     }
 
     @Test
-    public void deleteTest() {
+    public void updateWithNegativeIdShouldReturnNull() {
         Todo todo = new Todo();
-        todo.setId(1);
+        todo.setId(-1);
         todo.setText("Test task");
         todo.setDone(false);
 
-        mockDatabase.delete(todo.getId());
-
-        verify(mockDatabase).delete(todo.getId());
+        assertNull(mockDatabase.update(todo.getId(), todo));
     }
 
     @Test
-    public void getTodoByIdTest() {
+    public void deleteIdZeroOrNegativeShouldReturnNull() {
         Todo todo = new Todo();
-        todo.setId(1);
+        todo.setId(0);
         todo.setText("Test task");
         todo.setDone(false);
 
-        databaseFacade.getTodoById(todo.getId());
-
-        verify(mockDatabase).getTodoById(todo.getId());
+        assertNull(mockDatabase.delete(todo.getId()));
     }
 
     @Test
+    public void getAllTodosArrayListShouldBeReturned(){
+        List<Todo> todos = databaseFacade.getAllTodos();
 
-    public void getAllTodosTest(){
-        Todo todo = new Todo();
-        todo.setId(1);
-        todo.setText("Test task");
-        todo.setDone(false);
-
-        List<Todo> todos = new ArrayList<>();
-        todos.add(todo);
-
-        databaseFacade.getAllTodos();
-
-        verify(mockDatabase).getAllTodos();
+        assertNotNull(todos);
+        assertTrue(todos.size() > 0);
     }
 }

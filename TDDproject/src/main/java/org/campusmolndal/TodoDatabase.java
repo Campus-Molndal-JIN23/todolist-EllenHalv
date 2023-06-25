@@ -9,7 +9,10 @@ import java.util.ArrayList;
 public class TodoDatabase {
     private Connection connection;
 
+    private String databaseName;
+
     public TodoDatabase(String databaseName) { // establish connection to database
+        this.databaseName = databaseName;
         try {
         this.connection = DriverManager.getConnection("jdbc:sqlite:" + databaseName + ".db");
         createTable();
@@ -36,7 +39,7 @@ public class TodoDatabase {
     private Connection connect() {
         try {
             if (connection == null || connection.isClosed()) {
-                connection = DriverManager.getConnection("jdbc:sqlite:todo-list-db.db");
+                connection = DriverManager.getConnection("jdbc:sqlite:" + databaseName + ".db");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -44,7 +47,10 @@ public class TodoDatabase {
         return connection;
     }
 
-    public void create(Todo todo) {
+    public Todo create(Todo todo) {
+        if (todo.getText().isEmpty()) {
+            return null;
+        }
         String sql = "INSERT INTO todos (text, done) VALUES (?, ?)";
 
         try (Connection conn = connect();
@@ -55,9 +61,14 @@ public class TodoDatabase {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        return todo;
     }
 
     public Todo getTodoById(int id) {
+        if (id <= 0) {
+            return null;
+        }
+
         Todo todo = new Todo();
         String sql = "SELECT * FROM todos WHERE id = ?";
         try (Connection conn = connect();
@@ -65,12 +76,7 @@ public class TodoDatabase {
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                todo.setId(rs.getInt("id"));
-                todo.setText(rs.getString("text"));
-                todo.setDone(rs.getBoolean("done"));
-            } else {
-                // Todo not found with the specified id
-                return null;
+                todo = createTodoFromResultSet(rs);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -85,10 +91,7 @@ public class TodoDatabase {
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
-                Todo todo = new Todo();
-                todo.setId(rs.getInt("id"));
-                todo.setText(rs.getString("text"));
-                todo.setDone(rs.getBoolean("done"));
+                Todo todo = createTodoFromResultSet(rs);
                 todos.add(todo);
             }
         } catch (SQLException e) {
@@ -97,7 +100,11 @@ public class TodoDatabase {
         return todos;
     }
 
-    public void update(int id, Todo todo) {
+    public Todo update(int id, Todo todo) {
+        if (id <= 0) {
+            return null;
+        }
+
         String sql = "UPDATE todos SET text = ?, done = ? WHERE id = ?";
         try (Connection conn = connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -108,9 +115,19 @@ public class TodoDatabase {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        return todo;
     }
 
-    public void delete(int id) {
+    public Todo delete(int id) {
+        if (id <= 0) {
+            return null;
+        }
+
+        if (getTodoById(id) == null) {
+            return null;
+        }
+
+        Todo todo = new Todo();
         String sql = "DELETE FROM todos WHERE id = ?";
         try (Connection conn = connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -119,5 +136,14 @@ public class TodoDatabase {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        return todo;
+    }
+
+    private Todo createTodoFromResultSet(ResultSet rs) throws SQLException {
+        Todo todo = new Todo();
+        todo.setId(rs.getInt("id"));
+        todo.setText(rs.getString("text"));
+        todo.setDone(rs.getBoolean("done"));
+        return todo;
     }
 }
