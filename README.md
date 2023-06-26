@@ -6,7 +6,6 @@
 
 - The motivation for this project was to practice the use of Java and SQL and creating tests for the application to ensure that it works as intended.
 - The application allows the user to create a todo list and perform CRUD operations on the list. The application also allows the user to search for a specific todo item and edit or delete that item.
-- What did you learn?
 - I learned how to use Java and SQL to create a todo list application. I also learned how to create tests for the application to ensure that it works as intended.
 
 ## Table of Contents
