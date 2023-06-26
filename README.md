@@ -46,7 +46,7 @@ The application will perform the requested action and display the result or appr
 
 ## Credits
 
-Many thanks to [Kristian K.](https://github.com/person1) for reviewing the code and finding bugs!
+Many thanks to [Kristian K.]([https://github.com/person1](https://github.com/Bremmster)) for reviewing the code and finding bugs!
 
 Resources used:
 + [ChatGPT](https://chat.openai.com/auth/login) for better understanding of project structure and testing
