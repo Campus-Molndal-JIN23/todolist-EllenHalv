@@ -66,7 +66,8 @@ public class Menu {
 
     private void addTodo() {
         String text = getTextInput();
-        boolean done = getDoneInput();
+        String prompt = "Enter todo status (Is the todo done? Y/N): ";
+        boolean done = getYesOrNoInput(prompt);
 
         try {
         todoFacade.createTodo(text, done);
@@ -90,7 +91,8 @@ public class Menu {
         System.out.println("\nDescription: " + todo.getText() + "\nIs done: " + todo.isDone());
 
         String text = getTextInput();
-        boolean done = getDoneInput();
+        String prompt = "Enter todo status (Is the todo done? Y/N): ";
+        boolean done = getYesOrNoInput(prompt);
 
         todoFacade.updateTodo(id, text, done);
         System.out.println("\n~ Todo has been updated ~");
@@ -98,12 +100,13 @@ public class Menu {
 
     private void deleteTodo() {
         int id = getIdInput();
-
         Todo todo = todoDFacade.getTodoById(id);
         displayTodo(todo);
-        System.out.println("Are you sure you want to delete this todo? Y/N");
-        String answer = scanner.nextLine();
-        if (answer.equalsIgnoreCase("Y")) {
+
+        String prompt = "Are you sure you want to delete this todo? Y/N";
+        boolean delete = getYesOrNoInput(prompt);
+
+        if (delete) {
             todoDFacade.deleteTodoById(id);
             System.out.println("\n~ Todo has been deleted ~");
         } else {
@@ -149,19 +152,18 @@ public class Menu {
         }
     }
 
-    private boolean getDoneInput() {
-        System.out.print("Enter todo status (Is the todo done? Y/N): ");
-        String doneString = scanner.nextLine();
-        boolean done;
-        if (doneString.equalsIgnoreCase("Y")) {
-            done = true;
-        } else if (doneString.equalsIgnoreCase("N")) {
-            done = false;
+    private boolean getYesOrNoInput(String prompt) {
+        System.out.println(prompt);
+        String answer = scanner.nextLine();
+
+        if (answer.equalsIgnoreCase("Y")) {
+            return true;
+        } else if (answer.equalsIgnoreCase("N")) {
+            return false;
         } else {
             System.out.println("Invalid input, please try again");
-            done = getDoneInput();
+            return getYesOrNoInput(prompt);
         }
-        return done;
     }
 
     private String getTextInput() {
