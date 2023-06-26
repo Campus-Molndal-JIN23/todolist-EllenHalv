@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
-    private TodoDatabase todoDatabase;
-    private TodoDatabaseFacade todoDFacade;
-    private TodoFacade todoFacade;
+    private final TodoDatabase todoDatabase;
+    private final TodoDatabaseFacade todoDFacade;
+    private final TodoFacade todoFacade;
     Scanner scanner = new Scanner(System.in);
 
     public Menu() {
@@ -16,33 +16,18 @@ public class Menu {
         printMenu();
     }
     public void printMenu() {
-        boolean run = true;
-        while (run) {
+        while (true) {
             printMenuOptions();
             try {
                 int choice = Integer.parseInt(scanner.nextLine());
                 switch (choice) {
-                    case 1:
-                        addTodo();
-                        break;
-                    case 2:
-                        findTodo();
-                        break;
-                    case 3:
-                        updateTodo();
-                        break;
-                    case 4:
-                        deleteTodo();
-                        break;
-                    case 5:
-                        showAllTodos();
-                        break;
-                    case 6:
-                        exit();
-                        break;
-                    default:
-                        System.out.println("Invalid choice");
-                        break;
+                    case 1 -> addTodo();
+                    case 2 -> findTodo();
+                    case 3 -> updateTodo();
+                    case 4 -> deleteTodo();
+                    case 5 -> showAllTodos();
+                    case 6 -> exit();
+                    default -> System.out.println("Invalid choice");
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input, please enter a number");
@@ -119,7 +104,7 @@ public class Menu {
     }
 
     private void showAllTodos() {
-        ArrayList allTodos = todoDFacade.getAllTodos();
+        ArrayList<Todo> allTodos = todoDFacade.getAllTodos();
         displayArrayListTodos(allTodos);
     }
 

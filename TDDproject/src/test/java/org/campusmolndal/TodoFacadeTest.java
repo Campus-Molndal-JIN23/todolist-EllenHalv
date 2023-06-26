@@ -10,13 +10,12 @@ public class TodoFacadeTest {
 
     @Mock
     private TodoDatabase mockDatabase;
-    private TodoDatabaseFacade databaseFacade;
     private TodoFacade todoFacade;
 
     @BeforeEach
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
-        databaseFacade = new TodoDatabaseFacade(mockDatabase);
+        MockitoAnnotations.openMocks(this);
+        TodoDatabaseFacade databaseFacade = new TodoDatabaseFacade(mockDatabase);
         todoFacade = new TodoFacade(databaseFacade);
     }
 

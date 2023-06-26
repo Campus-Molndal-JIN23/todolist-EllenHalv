@@ -19,12 +19,12 @@ public class TodoDatabaseTest {
 
     @BeforeEach
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
         databaseFacade = new TodoDatabaseFacade(mockDatabase);
     }
 
     @Test
-    public void addNewTodoWithEmptyTextReturnsNull() {
+    void addNewTodoWithEmptyTextReturnsNull() {
         Todo todo = new Todo();
         todo.setId(0);
         todo.setText("");
@@ -36,7 +36,7 @@ public class TodoDatabaseTest {
     }
 
     @Test
-    public void getTodoByIdWithZeroOrNegativeReturnsNull() {
+    void getTodoByIdWithZeroOrNegativeReturnsNull() {
         when(mockDatabase.getTodoById(0)).thenReturn(null);
         when(mockDatabase.getTodoById(-1)).thenReturn(null);
 
@@ -45,7 +45,7 @@ public class TodoDatabaseTest {
     }
 
     @Test
-    public void updateTodoByIdWithNegativeIdReturnsNull() {
+    void updateTodoByIdWithNegativeIdReturnsNull() {
         Todo todo = new Todo();
         todo.setId(-1);
         todo.setText("Test task");
@@ -55,7 +55,7 @@ public class TodoDatabaseTest {
     }
 
     @Test
-    public void deleteTodoByIdWithIdZeroOrNegativeReturnsNull() {
+    void deleteTodoByIdWithIdZeroOrNegativeReturnsNull() {
         when(mockDatabase.delete(0)).thenReturn(null);
         when(mockDatabase.delete(-1)).thenReturn(null);
 
@@ -64,9 +64,9 @@ public class TodoDatabaseTest {
     }
 
     @Test
-    public void getAllTodosReturnsNonEmptyArrayList() {
+    void getAllTodosReturnsNonEmptyArrayList() {
         // Mock the behavior to return a non-empty list
-        when(mockDatabase.getAllTodos()).thenReturn((ArrayList) someNonEmptyList());
+        when(mockDatabase.getAllTodos()).thenReturn((ArrayList<Todo>) someNonEmptyList());
 
         List<Todo> todos = databaseFacade.getAllTodos();
 

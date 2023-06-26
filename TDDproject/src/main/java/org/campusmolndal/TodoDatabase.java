@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class TodoDatabase {
     private Connection connection;
 
-    private String databaseName;
+    private final String databaseName;
 
     public TodoDatabase(String databaseName) { // establish connection to database
         this.databaseName = databaseName;
@@ -86,7 +86,7 @@ public class TodoDatabase {
         return todo;
     }
 
-    public ArrayList getAllTodos() {
+    public ArrayList<Todo> getAllTodos() {
         ArrayList<Todo> todos = new ArrayList<>();
         String sql = "SELECT * FROM todos";
         try (Connection conn = connect();
@@ -150,10 +150,6 @@ public class TodoDatabase {
     }
 
     public boolean isTodoIdValid(int id) {
-        boolean validId = true;
-        if (getTodoById(id) == null) {
-            validId = false;
-        }
-        return validId;
+        return getTodoById(id) != null;
     }
 }

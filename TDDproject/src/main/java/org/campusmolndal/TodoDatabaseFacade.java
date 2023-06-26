@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 public class TodoDatabaseFacade {
 
-    private TodoDatabase todoDatabase;
+    private final TodoDatabase todoDatabase;
 
     public TodoDatabaseFacade(TodoDatabase todoDatabase) {
         this.todoDatabase = todoDatabase;
@@ -18,8 +18,7 @@ public class TodoDatabaseFacade {
             return null;
         }
         try {
-            Todo todo = todoDatabase.getTodoById(id);
-            return todo;
+            return todoDatabase.getTodoById(id);
         } catch (Exception e) {
             System.err.println("Error retrieving todo with ID " + id + ": " + e.getMessage());
             return null;
@@ -28,8 +27,7 @@ public class TodoDatabaseFacade {
 
     public ArrayList<Todo> getAllTodos() {
         try {
-            ArrayList<Todo> todos = todoDatabase.getAllTodos();
-            return todos;
+            return todoDatabase.getAllTodos();
         } catch (Exception e) {
             System.err.println("Error retrieving all todos: " + e.getMessage());
             return new ArrayList<>();

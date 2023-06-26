@@ -18,7 +18,7 @@ public class TodoDatabaseFacadeTest {
 
     @BeforeEach
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
         databaseFacade = new TodoDatabaseFacade(mockDatabase);
     }
 
@@ -47,7 +47,7 @@ public class TodoDatabaseFacadeTest {
     }
 
     @Test
-    public void updateTodoByIdZeroOrNegativeShouldReturnNull() {
+    void updateTodoByIdZeroOrNegativeShouldReturnNull() {
         Todo todo = new Todo();
         todo.setId(0);
         todo.setText("Test task");
@@ -57,7 +57,7 @@ public class TodoDatabaseFacadeTest {
     }
 
     @Test
-    public void deleteTodoByIdZeroOrNegativeShouldReturnNull() {
+    void deleteTodoByIdZeroOrNegativeShouldReturnNull() {
         Todo todo = new Todo();
         todo.setId(0);
         todo.setText("Test task");
@@ -67,7 +67,7 @@ public class TodoDatabaseFacadeTest {
     }
 
     @Test
-    public void getAllTodosShouldReturnListOfTodosFromDatabase() {
+    void getAllTodosShouldReturnListOfTodosFromDatabase() {
         ArrayList<Todo> todos = new ArrayList<>();
         todos.add(new Todo(1, "Task 1", false));
         todos.add(new Todo(2, "Task 2", true));
@@ -86,7 +86,7 @@ public class TodoDatabaseFacadeTest {
     }
 
     @Test
-    public void getTodoByIdShouldReturnTodoFromDatabase() {
+    void getTodoByIdShouldReturnTodoFromDatabase() {
         int todoId = 1;
         Todo todo = new Todo();
         todo.setId(todoId);
@@ -103,7 +103,7 @@ public class TodoDatabaseFacadeTest {
     }
 
     @Test
-    public void getTodoByIdWithNonexistentIdShouldReturnNull() {
+    void getTodoByIdWithNonexistentIdShouldReturnNull() {
         int nonexistentId = 999;
 
         when(mockDatabase.getTodoById(nonexistentId)).thenReturn(null);
