@@ -21,9 +21,11 @@ Jag började med att skriva pseudokod som förklarar vad varje klass ska göra o
 
 Jag skapade klassdiagram och flödesschema samt KanBan board. Klassdiagrammet är ej komplett utan jag använde det mer som en grund för att komma igång med tänkandet och hur jag skulle lägga upp projektet.
 
-[klassdiagram](..%2F..%2FPictures%2FScreenshots%2Fklassdia-todo.jpg)
-[flowchart](..%2F..%2FPictures%2FScreenshots%2Fflowchart-todo.jpg)
-[KanBan](https://user-images.githubusercontent.com/102437613/248950240-040808c7-125a-4478-aa9f-366a13b05faf.jpg)
++ [klassdiagram](https://user-images.githubusercontent.com/102437613/248950209-32afbc85-780e-4495-a3f1-8961d70c13bc.jpg)
+
++ [flowchart](https://user-images.githubusercontent.com/102437613/248950229-c86cf879-3798-4d43-9140-d630a468cad6.jpg)
+
++ [KanBan](https://user-images.githubusercontent.com/102437613/248950240-040808c7-125a-4478-aa9f-366a13b05faf.jpg)
 
 ### Jira/Trello/Github Project och projekthantering enligt Scrum/Kanban
 Jag använde mig av KanBan-boarden på Github för att enkelt se vad jag behövde göra. Sen kunde jag enkelt flytta uppgifterna som var klara till "done" och lägga till nya ifall det behövdes. Jag skrev även ett veckoschema för vilka uppgifter jag skulle göra på vilken dag, och följde det så gott det gick.
