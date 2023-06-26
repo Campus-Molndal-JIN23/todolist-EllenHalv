@@ -135,12 +135,18 @@ public class Menu {
 
     private int getIdInput() {
         System.out.print("Enter todo id: ");
-        int id = Integer.parseInt(scanner.nextLine());
-        if (id <= 0) {
+        String input = scanner.nextLine();
+        try {
+            int id = Integer.parseInt(input);
+            if (id <= 0) {
+                System.out.println("Invalid input, please try again");
+                return getIdInput();
+            }
+            return id;
+        } catch (NumberFormatException e) {
             System.out.println("Invalid input, please try again");
-            getIdInput();
+            return getIdInput();
         }
-        return id;
     }
 
     private boolean getDoneInput() {
