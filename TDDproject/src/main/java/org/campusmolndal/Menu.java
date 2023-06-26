@@ -138,8 +138,8 @@ public class Menu {
         String input = scanner.nextLine();
         try {
             int id = Integer.parseInt(input);
-            if (id <= 0) {
-                System.out.println("Invalid input, please try again");
+            if (id <= 0 || !todoDatabase.isTodoIdValid(id)) {
+                System.out.println("Todo does not exist, please try again");
                 return getIdInput();
             }
             return id;

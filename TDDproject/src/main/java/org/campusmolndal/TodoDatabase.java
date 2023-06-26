@@ -77,6 +77,8 @@ public class TodoDatabase {
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 todo = createTodoFromResultSet(rs);
+            } else {
+                return null;
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -145,5 +147,13 @@ public class TodoDatabase {
         todo.setText(rs.getString("text"));
         todo.setDone(rs.getBoolean("done"));
         return todo;
+    }
+
+    public boolean isTodoIdValid(int id) {
+        boolean validId = true;
+        if (getTodoById(id) == null) {
+            validId = false;
+        }
+        return validId;
     }
 }
