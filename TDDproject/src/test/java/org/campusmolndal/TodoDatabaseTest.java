@@ -24,7 +24,7 @@ public class TodoDatabaseTest {
     }
 
     @Test
-    public void createTodoWithEmptyTextReturnsNull() {
+    public void addNewTodoWithEmptyTextReturnsNull() {
         Todo todo = new Todo();
         todo.setId(0);
         todo.setText("");
@@ -32,7 +32,7 @@ public class TodoDatabaseTest {
 
         when(mockDatabase.create(todo)).thenReturn(null);
 
-        assertNull(mockDatabase.create(todo));
+        assertNull(databaseFacade.addNewTodo(todo));
     }
 
     @Test
@@ -40,27 +40,27 @@ public class TodoDatabaseTest {
         when(mockDatabase.getTodoById(0)).thenReturn(null);
         when(mockDatabase.getTodoById(-1)).thenReturn(null);
 
-        assertNull(mockDatabase.getTodoById(0));
-        assertNull(mockDatabase.getTodoById(-1));
+        assertNull(databaseFacade.getTodoById(0));
+        assertNull(databaseFacade.getTodoById(-1));
     }
 
     @Test
-    public void updateWithNegativeIdReturnsNull() {
+    public void updateTodoByIdWithNegativeIdReturnsNull() {
         Todo todo = new Todo();
         todo.setId(-1);
         todo.setText("Test task");
         todo.setDone(false);
 
-        assertNull(mockDatabase.update(todo.getId(), todo));
+        assertNull(databaseFacade.updateTodoById(todo.getId(), todo));
     }
 
     @Test
-    public void deleteWithIdZeroOrNegativeReturnsNull() {
+    public void deleteTodoByIdWithIdZeroOrNegativeReturnsNull() {
         when(mockDatabase.delete(0)).thenReturn(null);
         when(mockDatabase.delete(-1)).thenReturn(null);
 
-        assertNull(mockDatabase.delete(0));
-        assertNull(mockDatabase.delete(-1));
+        assertNull(databaseFacade.deleteTodoById(0));
+        assertNull(databaseFacade.deleteTodoById(-1));
     }
 
     @Test
@@ -77,7 +77,6 @@ public class TodoDatabaseTest {
     // Helper method to create a non-empty list of Todo objects for testing
     private List<Todo> someNonEmptyList() {
         List<Todo> todos = new ArrayList<>();
-        // Add some Todo objects to the list
         todos.add(new Todo());
         todos.add(new Todo());
         return todos;

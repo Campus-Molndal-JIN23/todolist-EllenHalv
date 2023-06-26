@@ -36,9 +36,9 @@ public class TodoDatabaseFacade {
         }
     }
 
-    public void addNewTodo(Todo todo) {
+    public Todo addNewTodo(Todo todo) {
         if (todo.getText().isEmpty()) {
-            throw new IllegalArgumentException("Todo text cannot be empty");
+            return null;
         }
 
         try {
@@ -46,6 +46,7 @@ public class TodoDatabaseFacade {
         } catch (Exception e) {
             System.err.println("Error adding new todo: " + e.getMessage());
         }
+        return todo;
     }
 
     public Todo updateTodoById(int id, Todo todo) {
