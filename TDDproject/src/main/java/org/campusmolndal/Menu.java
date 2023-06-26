@@ -19,29 +19,33 @@ public class Menu {
         boolean run = true;
         while (run) {
             printMenuOptions();
-            int choice = Integer.parseInt(scanner.nextLine());
-            switch (choice) {
-                case 1:
-                    addTodo();
-                    break;
-                case 2:
-                    findTodo();
-                    break;
-                case 3:
-                    updateTodo();
-                    break;
-                case 4:
-                    deleteTodo();
-                    break;
-                case 5:
-                    showAllTodos();
-                    break;
-                case 6:
-                    exit();
-                    break;
-                default:
-                    System.out.println("Invalid choice");
-                    break;
+            try {
+                int choice = Integer.parseInt(scanner.nextLine());
+                switch (choice) {
+                    case 1:
+                        addTodo();
+                        break;
+                    case 2:
+                        findTodo();
+                        break;
+                    case 3:
+                        updateTodo();
+                        break;
+                    case 4:
+                        deleteTodo();
+                        break;
+                    case 5:
+                        showAllTodos();
+                        break;
+                    case 6:
+                        exit();
+                        break;
+                    default:
+                        System.out.println("Invalid choice");
+                        break;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input, please enter a number");
             }
         }
     }
