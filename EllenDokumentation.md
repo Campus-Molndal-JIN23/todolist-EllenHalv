@@ -21,6 +21,7 @@ Jag började med att skriva pseudokod som förklarar vad varje klass ska göra o
 
 Jag skapade klassdiagram och flödesschema samt KanBan board. Klassdiagrammet är ej komplett utan jag använde det mer som en grund för att komma igång med tänkandet och hur jag skulle lägga upp projektet.
 
+[images](https://github.com/Campus-Molndal-JIN23/todolist-EllenHalv/issues/1#issue-1775638525)
 ![klassdia-todo.jpg](..%2F..%2FPictures%2FScreenshots%2Fklassdia-todo.jpg)
 ![flowchart-todo.jpg](..%2F..%2FPictures%2FScreenshots%2Fflowchart-todo.jpg)
 ![KanBan-todo.jpg](..%2F..%2FPictures%2FScreenshots%2FKanBan-todo.jpg)
