@@ -35,19 +35,15 @@ public class TodoDatabaseFacadeTest {
     }
 
     @Test
-    public void addNewTodoWithEmptyTextShouldThrowException() {
+    public void addNewTodoWithEmptyTextShouldReturnNull() {
         Todo todo = new Todo();
         todo.setId(1);
         todo.setText("");
         todo.setDone(false);
 
-        doThrow(IllegalArgumentException.class)
-                .when(mockDatabase)
-                .create(todo);
+        when(mockDatabase.create(todo)).thenReturn(null);
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            databaseFacade.addNewTodo(todo);
-        });
+        assertNull(databaseFacade.addNewTodo(todo));
     }
 
     @Test
