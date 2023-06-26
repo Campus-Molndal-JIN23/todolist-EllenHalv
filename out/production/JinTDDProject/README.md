@@ -22,9 +22,6 @@
 3. Build the project to resolve dependencies.
 4. Run the Main class to start the application.
 
-## Javaversion
-In this program, JDK: Oracle OpenJDK 10 (Version 19.0.2) is used.
-
 ## Usage
 
 When the application starts, you will see the main menu with the following options:
@@ -44,11 +41,9 @@ The application will perform the requested action and display the result or appr
 
 ## Credits
 
-Many thanks to [Kristian K.](https://github.com/person1) for reviewing the code and finding bugs!
-
-Resources used:
-+ [ChatGPT](https://chat.openai.com/auth/login) for better understanding of project structure and testing
-+ [Co-Pilot](https://github.com/features/copilot/) for helping with test-suggestions and get/set methods
+List your collaborators, if any, with links to their GitHub profiles.
+* [member 1](https://github.com/person1)
+* [member 2](https://github.com/person1)
 
 ## License
 
